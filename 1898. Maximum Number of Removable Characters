@@ -1,0 +1,48 @@
+class Solution {
+public:
+
+/* using simple binary search on the removable array
+  find mid and check if the subseq exists by deleting all elements till mid if yes look for the  right hand side otherwise look for the left side of removable array
+*/
+   
+   //function to check if the sunseq is existing by deleting all elements till mid index
+   
+   bool check(int mid,string s,string p,vector<int>& removable)
+    {
+       for(int i=0;i<=mid;i++)
+       {
+           s[removable[i]]='0';
+       }
+        int j=0,i=0;
+        while(i<s.length())
+        {
+            if(s[i]==p[j])
+                j++;
+            if(j==p.length())
+                break;
+            i++;
+        }
+        return j==p.length();
+    }
+    
+    
+    
+    
+    int maximumRemovals(string s, string p, vector<int>& removable) {
+        
+        int l=0,h=removable.size()-1;
+        int ans=-1;
+        while(l<=h)
+        {
+            int mid=l+(h-l)/2;
+            if(check(mid,s,p,removable))
+            {
+                ans=mid;
+                l=mid+1;
+            }
+            else
+                h=mid-1;
+        }
+        return ans+1;
+    }
+};

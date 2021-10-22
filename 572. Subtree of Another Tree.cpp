@@ -21,18 +21,16 @@ public:
             return false;
         return isSame(a->left,b->left) && isSame(a->right,b->right);
     }
-     void preorder(TreeNode * root,TreeNode *subRoot,bool& found)
-     {
-         if(!root || found==true)
-             return;
-         if(root->val==subRoot->val)
-             found=isSame(root,subRoot);
-         preorder(root->left,subRoot,found);
-         preorder(root->right,subRoot,found);    
-     }
+    
     bool isSubtree(TreeNode* root, TreeNode* subRoot) {
        bool found=false;
-        preorder(root,subRoot,found);
+        if(root->left)
+            found=isSubtree(root->left,subRoot);
+        if(root->val== subRoot->val)
+            if(isSame(root,subRoot))
+                return true;
+        if(!found && root->right)
+            found=isSubtree(root->right,subRoot);
         return found;
     }
 };
